@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classify - NeuroVision</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .upload-area {
+            border: 2px dashed #E5E7EB;
+            transition: all 0.3s ease;
+        }
+
+        .upload-area:hover {
+            border-color: #6366F1;
+            background-color: #F9FAFB;
+        }
+
+        .prediction-card {
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .confidence-bar {
+            transition: width 1s ease-in-out;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <header class="bg-white shadow-sm">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i class="fas fa-brain text-indigo-600 text-2xl mr-2"></i>
+                        <a href="/" class="text-2xl font-bold text-indigo-600">NeuroVision</a>
+                    </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="/"
+                            class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Home
+                        </a>
+                        <a href="/classify"
+                            class="border-indigo-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Classify
+                        </a>
+                        <a href="/model-info"
+                            class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Model Info
+                        </a>
+                        <a href="/about"
+                            class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            About
+                        </a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <a href="https://github.com/yourusername/neurovision" target="_blank"
+                        class="text-gray-500 hover:text-gray-700">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div class="px-4 py-6 sm:px-0">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h1 class="text-3xl font-bold text-gray-900 mb-6">Brain Tumor Classification</h1>
+
+                <!-- Upload Section -->
+                <div class="upload-area rounded-lg p-8 text-center cursor-pointer mb-6" id="uploadSection">
+                    <input type="file" id="fileInput" accept="image/*" class="hidden">
+                    <div class="space-y-4">
+                        <i class="fas fa-cloud-upload-alt text-4xl text-indigo-600"></i>
+                        <div>
+                            <p class="text-xl font-medium text-gray-700">Drop your MRI scan here</p>
+                            <p class="text-sm text-gray-500 mt-1">or click to browse files</p>
+                        </div>
+                        <p class="text-xs text-gray-400">Supported formats: PNG, JPG, JPEG</p>
+                    </div>
+                </div>
+
+                <!-- Preview Section -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Image Preview -->
+                    <div class="preview-section hidden">
+                        <h2 class="text-lg font-medium text-gray-900 mb-4">Uploaded Image</h2>
+                        <div class="bg-gray-100 rounded-lg p-4">
+                            <img id="preview" alt="Preview" class="max-w-full h-auto rounded-lg">
+                        </div>
+                    </div>
+
+                    <!-- Results Section -->
+                    <div id="results" class="hidden">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-lg font-medium text-gray-900">Analysis Results</h2>
+                            <button id="tryAnotherBtn"
+                                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                <i class="fas fa-redo-alt mr-2"></i>
+                                Try Another Scan
+                            </button>
+                        </div>
+
+                        <!-- Prediction Card -->
+                        <div class="prediction-card bg-gradient-to-r from-indigo-50 to-blue-50 rounded-lg p-6 mb-4">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-xl font-bold text-gray-900">Detected Class</h3>
+                                <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">
+                                    Confidence: <span id="confidenceValue">-</span>
+                                </span>
+                            </div>
+                            <div class="bg-white rounded-lg p-4 shadow-sm">
+                                <p id="predictionLabel" class="text-2xl font-bold text-indigo-600">-</p>
+                            </div>
+                        </div>
+
+                        <!-- Probability Distribution -->
+                        <div class="bg-white rounded-lg p-4 shadow-sm">
+                            <h3 class="text-lg font-medium text-gray-900 mb-3">Class Probabilities</h3>
+                            <div id="probabilityChart" class="space-y-3">
+                                <!-- Probabilities will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Loading State -->
+                <div id="loadingContainer" class="hidden">
+                    <div class="flex flex-col items-center justify-center py-12">
+                        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+                        <p class="mt-4 text-gray-600">Analyzing image...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const uploadSection = document.getElementById('uploadSection');
+        const fileInput = document.getElementById('fileInput');
+        const preview = document.getElementById('preview');
+        const previewSection = document.querySelector('.preview-section');
+        const loadingContainer = document.getElementById('loadingContainer');
+        const results = document.getElementById('results');
+        const predictionLabel = document.getElementById('predictionLabel');
+        const confidenceValue = document.getElementById('confidenceValue');
+        const probabilityChart = document.getElementById('probabilityChart');
+
+        // Handle drag and drop
+        uploadSection.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadSection.classList.add('border-indigo-600', 'bg-gray-50');
+        });
+
+        uploadSection.addEventListener('dragleave', () => {
+            uploadSection.classList.remove('border-indigo-600', 'bg-gray-50');
+        });
+
+        uploadSection.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadSection.classList.remove('border-indigo-600', 'bg-gray-50');
+            const file = e.dataTransfer.files[0];
+            handleFile(file);
+        });
+
+        // Handle click to upload
+        uploadSection.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            handleFile(file);
+        });
+
+        function handleFile(file) {
+            if (!file) return;
+
+            // Show preview
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                preview.src = e.target.result;
+                previewSection.classList.remove('hidden');
+                uploadSection.classList.add('hidden');
+                loadingContainer.classList.remove('hidden');
+                results.classList.add('hidden');
+
+                // Send image to server
+                const formData = new FormData();
+                formData.append('image', file);
+
+                fetch('/predict', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        loadingContainer.classList.add('hidden');
+                        results.classList.remove('hidden');
+
+                        // Update prediction
+                        predictionLabel.textContent = data.prediction.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                        confidenceValue.textContent = `${(data.confidence * 100).toFixed(1)}%`;
+
+                        // Create probability chart
+                        const probabilities = data.probabilities;
+                        const chartData = Object.entries(probabilities).map(([label, value]) => ({
+                            label: label.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+                            value: value * 100
+                        }));
+
+                        // Sort by probability
+                        chartData.sort((a, b) => b.value - a.value);
+
+                        // Create chart HTML with color coding
+                        probabilityChart.innerHTML = chartData.map((item, index) => {
+                            const colors = ['indigo', 'blue', 'green', 'purple'];
+                            const color = colors[index % colors.length];
+                            return `
+                            <div class="mb-2">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="text-sm font-medium text-gray-700">${item.label}</span>
+                                    <span class="text-sm font-medium text-${color}-600">${item.value.toFixed(1)}%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                    <div class="bg-${color}-600 h-2.5 rounded-full confidence-bar" style="width: ${item.value}%"></div>
+                                </div>
+                            </div>
+                        `;
+                        }).join('');
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        loadingContainer.classList.add('hidden');
+                        alert('An error occurred while processing the image. Please try again.');
+                    });
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Add event listener for Try Another button
+        document.getElementById('tryAnotherBtn').addEventListener('click', () => {
+            // Reset the form
+            fileInput.value = '';
+            preview.src = '';
+            previewSection.classList.add('hidden');
+            uploadSection.classList.remove('hidden');
+            results.classList.add('hidden');
+
+            // Reset the results
+            predictionLabel.textContent = '-';
+            confidenceValue.textContent = '-';
+            probabilityChart.innerHTML = '';
+        });
+    </script>
+</body>
+
+</html>

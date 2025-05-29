@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - NeuroVision</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .team-card {
+            transition: transform 0.2s;
+        }
+
+        .team-card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <header class="bg-white shadow-sm">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i class="fas fa-brain text-indigo-600 text-2xl mr-2"></i>
+                        <a href="/" class="text-2xl font-bold text-indigo-600">NeuroVision</a>
+                    </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="/"
+                            class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Home
+                        </a>
+                        <a href="/classify"
+                            class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Classify
+                        </a>
+                        <a href="/model-info"
+                            class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Model Info
+                        </a>
+                        <a href="/about"
+                            class="border-indigo-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            About
+                        </a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <a href="https://github.com/yourusername/neurovision" target="_blank"
+                        class="text-gray-500 hover:text-gray-700">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            <!-- Mobile menu button -->
+            <div class="-mr-2 flex items-center sm:hidden">
+                <button type="button"
+                    class="mobile-menu-button inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+                    aria-controls="mobile-menu" aria-expanded="false">
+                    <span class="sr-only">Open main menu</span>
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Mobile menu, show/hide based on menu state -->
+        <div class="sm:hidden" id="mobile-menu" style="display: none;">
+            <div class="pt-2 pb-3 space-y-1">
+                <a href="/"
+                    class="text-gray-500 hover:bg-gray-50 hover:text-gray-700 block pl-3 pr-4 py-2 text-base font-medium">Home</a>
+                <a href="/classify"
+                    class="text-gray-500 hover:bg-gray-50 hover:text-gray-700 block pl-3 pr-4 py-2 text-base font-medium">Classify</a>
+                <a href="/model-info"
+                    class="text-gray-500 hover:bg-gray-50 hover:text-gray-700 block pl-3 pr-4 py-2 text-base font-medium">Model
+                    Info</a>
+                <a href="/about"
+                    class="bg-indigo-50 border-indigo-500 text-indigo-700 block pl-3 pr-4 py-2 text-base font-medium">About</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div class="px-4 py-6 sm:px-0">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h1 class="text-3xl font-bold text-gray-900 mb-6">About NeuroVision</h1>
+
+                <div class="space-y-8">
+                    <!-- Project Overview -->
+                    <div class="bg-gray-50 p-6 rounded-lg">
+                        <h2 class="text-2xl font-semibold text-gray-900 mb-4">Project Overview</h2>
+                        <div class="prose text-gray-700">
+                            <p>NeuroVision is an advanced brain tumor classification system that leverages
+                                state-of-the-art deep learning techniques to assist medical professionals in diagnosing
+                                brain tumors from MRI scans. Our mission is to provide accurate, efficient, and
+                                accessible tools for medical diagnosis.</p>
+                        </div>
+                    </div>
+
+                    <!-- Our Team -->
+                    
+
+                    <!-- Contribute Section -->
+                    <div class="bg-gray-50 p-6 rounded-lg">
+                        <h2 class="text-2xl font-semibold text-gray-900 mb-4">Contribute to NeuroVision</h2>
+                        <div class="prose text-gray-700">
+                            <p>We welcome contributions from the community to help improve NeuroVision. Here's how you
+                                can get involved:</p>
+                            <div class="mt-4 space-y-4">
+                                <div class="bg-white p-4 rounded-lg shadow-sm">
+                                    <h3 class="text-lg font-medium text-gray-900">1. Report Issues</h3>
+                                    <p>Found a bug or have a feature request? Open an issue on our GitHub repository.
+                                    </p>
+                                    <a href="https://github.com/yourusername/neurovision/issues" target="_blank"
+                                        class="text-indigo-600 hover:text-indigo-800 mt-2 inline-block">
+                                        <i class="fab fa-github mr-2"></i>View Issues
+                                    </a>
+                                </div>
+                                <div class="bg-white p-4 rounded-lg shadow-sm">
+                                    <h3 class="text-lg font-medium text-gray-900">2. Submit Pull Requests</h3>
+                                    <p>Have a fix or improvement? Submit a pull request with your changes.</p>
+                                    <a href="https://github.com/yourusername/neurovision/pulls" target="_blank"
+                                        class="text-indigo-600 hover:text-indigo-800 mt-2 inline-block">
+                                        <i class="fab fa-github mr-2"></i>Create Pull Request
+                                    </a>
+                                </div>
+                                <div class="bg-white p-4 rounded-lg shadow-sm">
+                                    <h3 class="text-lg font-medium text-gray-900">3. Documentation</h3>
+                                    <p>Help improve our documentation or write tutorials for users.</p>
+                                    <a href="https://github.com/yourusername/neurovision/wiki" target="_blank"
+                                        class="text-indigo-600 hover:text-indigo-800 mt-2 inline-block">
+                                        <i class="fas fa-book mr-2"></i>View Documentation
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Section -->
+                    <div class="bg-gray-50 p-6 rounded-lg">
+                        <h2 class="text-2xl font-semibold text-gray-900 mb-4">Contact Us</h2>
+                        <div class="prose text-gray-700">
+                            <p>For inquiries, collaborations, or feedback, please reach out to us through our social
+                                media channels or email addresses provided above.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Load and display team information
+            fetch('/static/data/team.json')
+                .then(response => response.json())
+                .then(data => {
+                    const teamContainer = document.getElementById('team-container');
+                    data.team.forEach(member => {
+                        const memberCard = document.createElement('div');
+                        memberCard.className = 'team-card bg-white p-6 rounded-lg shadow-sm';
+                        memberCard.innerHTML = `
+                            <div class="flex flex-col items-center text-center">
+                                <div class="w-24 h-24 rounded-full bg-indigo-100 flex items-center justify-center mb-4">
+                                    <i class="fas fa-user text-indigo-600 text-3xl"></i>
+                                </div>
+                                <h4 class="text-xl font-semibold text-gray-900">${member.name}</h4>
+                                <p class="text-indigo-600 font-medium">${member.role}</p>
+                                <div class="flex space-x-4 mt-4">
+                                    <a href="${member.social.github}" target="_blank" class="text-gray-500 hover:text-gray-700">
+                                        <i class="fab fa-github text-xl"></i>
+                                    </a>
+                                    <a href="${member.social.linkedin}" target="_blank" class="text-gray-500 hover:text-gray-700">
+                                        <i class="fab fa-linkedin text-xl"></i>
+                                    </a>
+                                    <a href="${member.social.website}" target="_blank" class="text-gray-500 hover:text-gray-700">
+                                        <i class="fas fa-globe text-xl"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        ;
+                        teamContainer.appendChild(memberCard);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading team information:', error);
+                });
+
+            // Mobile menu toggle functionality
+            const mobileMenuButton = document.querySelector('.mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            mobileMenuButton.addEventListener('click', function () {
+                const isHidden = mobileMenu.style.display === 'none';
+                mobileMenu.style.display = isHidden ? 'block' : 'none';
+                mobileMenuButton.setAttribute('aria-expanded', isHidden);
+            });
+        });
+    </script>
+</body>
+
+</html>

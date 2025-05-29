@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Information - NeuroVision</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .metric-card {
+            transition: transform 0.2s;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .progress-bar {
+            height: 8px;
+            border-radius: 4px;
+            background-color: #e2e8f0;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease-in-out;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tab-button.active {
+            color: #4F46E5;
+            border-color: #4F46E5;
+        }
+
+        .training-details {
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .training-details th,
+        .training-details td {
+            padding: 0.75rem 1rem;
+            border: 1px solid #e5e7eb;
+        }
+
+        .training-details th {
+            background-color: #f9fafb;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <header class="bg-white shadow-sm">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i class="fas fa-brain text-indigo-600 text-2xl mr-2"></i>
+                        <a href="/" class="text-2xl font-bold text-indigo-600">NeuroVision</a>
+                    </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="/"
+                            class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Home
+                        </a>
+                        <a href="/classify"
+                            class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Classify
+                        </a>
+                        <a href="/model-info"
+                            class="border-indigo-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Model Info
+                        </a>
+                        <a href="/about"
+                            class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            About
+                        </a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <a href="https://github.com/yourusername/neurovision" target="_blank"
+                        class="text-gray-500 hover:text-gray-700">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            <!-- Mobile menu button -->
+            <div class="-mr-2 flex items-center sm:hidden">
+                <button type="button"
+                    class="mobile-menu-button inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+                    aria-controls="mobile-menu" aria-expanded="false">
+                    <span class="sr-only">Open main menu</span>
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Mobile menu, show/hide based on menu state -->
+        <div class="sm:hidden" id="mobile-menu" style="display: none;">
+            <div class="pt-2 pb-3 space-y-1">
+                <a href="/"
+                    class="text-gray-500 hover:bg-gray-50 hover:text-gray-700 block pl-3 pr-4 py-2 text-base font-medium">Home</a>
+                <a href="/classify"
+                    class="text-gray-500 hover:bg-gray-50 hover:text-gray-700 block pl-3 pr-4 py-2 text-base font-medium">Classify</a>
+                <a href="/model-info"
+                    class="bg-indigo-50 border-indigo-500 text-indigo-700 block pl-3 pr-4 py-2 text-base font-medium">Model
+                    Info</a>
+                <a href="/about"
+                    class="text-gray-500 hover:bg-gray-50 hover:text-gray-700 block pl-3 pr-4 py-2 text-base font-medium">About</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div class="px-4 py-6 sm:px-0">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h1 class="text-3xl font-bold text-gray-900 mb-6">Model Information</h1>
+
+                <!-- Tab Navigation -->
+                <div class="border-b border-gray-200 mb-6">
+                    <nav class="-mb-px flex space-x-8">
+                        <button class="tab-button active whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm"
+                            data-tab="overview">
+                            Overview
+                        </button>
+                        <button
+                            class="tab-button whitespace-nowrap py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                            data-tab="architecture">
+                            Architecture
+                        </button>
+                        <button
+                            class="tab-button whitespace-nowrap py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                            data-tab="performance">
+                            Performance
+                        </button>
+                        <button
+                            class="tab-button whitespace-nowrap py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                            data-tab="training">
+                            Training Process
+                        </button>
+                        <button
+                            class="tab-button whitespace-nowrap py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                            data-tab="technical">
+                            Technical Details
+                        </button>
+                    </nav>
+                </div>
+
+                <!-- Overview Tab -->
+                <div id="overview" class="tab-content active">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h3 class="text-lg font-medium text-gray-700">Model Details</h3>
+                            <div class="mt-2 space-y-2">
+                                <p><span class="font-medium">Name:</span> <span id="model-name"
+                                        class="text-gray-600">Loading...</span>NeuroVision</p>
+                                <p><span class="font-medium">Version:</span> <span id="model-version"
+                                        class="text-gray-600">Loading...</span>deit_small_patch16_224</p>
+                                <p><span class="font-medium">Type:</span> <span id="model-type"
+                                        class="text-gray-600">Loading...</span></p>
+                                <p><span class="font-medium">Architecture:</span> <span id="model-architecture"
+                                        class="text-gray-600">Loading...</span></p>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h3 class="text-lg font-medium text-gray-700">Classification Classes</h3>
+                            <div class="mt-4">
+                                <div class="grid grid-cols-1 gap-3">
+                                    <div class="flex items-center p-3 bg-white rounded-lg shadow-sm">
+                                        <i class="fas fa-circle text-red-500 mr-3"></i>
+                                        <div>
+                                            <p class="font-medium">Glioma Tumor</p>
+                                            <p class="text-sm text-gray-600">Support: 300 Original samples</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center p-3 bg-white rounded-lg shadow-sm">
+                                        <i class="fas fa-circle text-blue-500 mr-3"></i>
+                                        <div>
+                                            <p class="font-medium">Meningioma Tumor</p>
+                                            <p class="text-sm text-gray-600">Support: 306 Original samples</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center p-3 bg-white rounded-lg shadow-sm">
+                                        <i class="fas fa-circle text-green-500 mr-3"></i>
+                                        <div>
+                                            <p class="font-medium">No Tumor</p>
+                                            <p class="text-sm text-gray-600">Support: 405 Original samples</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center p-3 bg-white rounded-lg shadow-sm">
+                                        <i class="fas fa-circle text-purple-500 mr-3"></i>
+                                        <div>
+                                            <p class="font-medium">Pituitary Tumor</p>
+                                            <p class="text-sm text-gray-600">Support: 300 Original samples</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Architecture Tab -->
+                <div id="architecture" class="tab-content">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h3 class="text-lg font-medium text-gray-700 mb-3">Architecture Diagram</h3>
+                            <div class="architecture-image-container">
+                                <img id="architecture-image" src="/static/images/diagram.jpg" alt="Model Architecture"
+                                    class="w-full rounded-lg shadow-sm">
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h3 class="text-lg font-medium text-gray-700 mb-3">Architecture Details</h3>
+                            <div id="architecture-details" class="prose text-gray-700">
+                                <!-- Architecture details will be populated here -->
+                                NeuroVision uses the DeiT smalt architecture, which is based on the Vision Transformer
+                                (ViT) design. The model divides input images into fixed-size patches, processes then as
+                                a sequence using self-attention mechanisms, and produces classification outputs.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Performance Tab -->
+                <div id="performance" class="tab-content">
+                    <div class="space-y-6">
+                        <!-- Basic Metrics -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                            <div class="metric-card bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
+                                <h3 class="text-lg font-medium text-gray-700">Accuracy</h3>
+                                <div class="mt-2">
+                                    <div class="flex items-center justify-between">
+                                        <span id="accuracy" class="text-2xl font-bold text-indigo-600">99.31%</span>
+                                    </div>
+                                    <div class="progress-bar mt-2">
+                                        <div id="accuracy-bar" class="progress-bar-fill bg-indigo-600"
+                                            style="width: 99.31%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="metric-card bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
+                                <h3 class="text-lg font-medium text-gray-700">Precision</h3>
+                                <div class="mt-2">
+                                    <div class="flex items-center justify-between">
+                                        <span id="precision" class="text-2xl font-bold text-green-600">99%</span>
+                                    </div>
+                                    <div class="progress-bar mt-2">
+                                        <div id="precision-bar" class="progress-bar-fill bg-green-600"
+                                            style="width: 99%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="metric-card bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
+                                <h3 class="text-lg font-medium text-gray-700">Recall</h3>
+                                <div class="mt-2">
+                                    <div class="flex items-center justify-between">
+                                        <span id="recall" class="text-2xl font-bold text-blue-600">99%</span>
+                                    </div>
+                                    <div class="progress-bar mt-2">
+                                        <div id="recall-bar" class="progress-bar-fill bg-blue-600" style="width: 99%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="metric-card bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
+                                <h3 class="text-lg font-medium text-gray-700">F1 Score</h3>
+                                <div class="mt-2">
+                                    <div class="flex items-center justify-between">
+                                        <span id="f1-score" class="text-2xl font-bold text-purple-600">99%</span>
+                                    </div>
+                                    <div class="progress-bar mt-2">
+                                        <div id="f1-score-bar" class="progress-bar-fill bg-purple-600"
+                                            style="width: 99%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Detailed Performance Metrics -->
+                        <div class="bg-gray-50 p-6 rounded-lg">
+                            <h3 class="text-lg font-medium text-gray-700 mb-4">Class-wise Performance</h3>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead>
+                                        <tr class="bg-gray-50">
+                                            <th
+                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Class</th>
+                                            <th
+                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Precision</th>
+                                            <th
+                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Recall</th>
+                                            <th
+                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                F1-Score</th>
+                                            <th
+                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Support</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y divide-gray-200">
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                                Glioma</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1.00</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">0.98</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">0.99</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">300</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                                Meningioma</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">0.98</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">0.99</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">0.99</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">306</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">No
+                                                Tumor</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1.00</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1.00</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1.00</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">405</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                                Pituitary</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">0.99</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1.00</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1.00</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">300</td>
+                                        </tr>
+                                        <tr class="bg-gray-50">
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                                Macro Avg</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">0.99</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">0.99</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">0.99</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1311</td>
+                                        </tr>
+                                        <tr class="bg-gray-50">
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                                Weighted Avg</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">0.99</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">0.99</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">0.99</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1311</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Training Process Tab -->
+                <div id="training" class="tab-content">
+                    <div class="space-y-6">
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h3 class="text-lg font-medium text-gray-700 mb-3">Dataset Structure</h3>
+                            <div class="prose text-gray-700">
+                                <div class="space-y-4">
+                                    <div class="bg-white p-4 rounded-lg shadow-sm">
+                                        <h4 class="font-medium text-gray-900 mb-2">Directory Organization</h4>
+                                        <pre class="bg-gray-800 text-white p-4 rounded-lg mt-2 overflow-x-auto">
+dataset/
+├── original/
+│   ├── Training/
+│   │   ├── glioma/
+│   │   ├── meningioma/
+│   │   ├── pituitary/
+│   │   └── no_tumor/
+│   └── Testing/
+│       ├── glioma/
+│       ├── meningioma/
+│       ├── pituitary/
+│       └── no_tumor/
+└── augmented/
+    └── Training/
+        ├── glioma/
+        ├── meningioma/
+        ├── pituitary/
+        └── no_tumor/</pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h3 class="text-lg font-medium text-gray-700 mb-3">Data Augmentation Pipeline</h3>
+                            <div class="space-y-4">
+                                <div class="bg-white p-4 rounded-lg shadow-sm">
+                                    <h4 class="font-medium text-gray-900 mb-2">1. Geometric Transformations</h4>
+                                    <ul class="list-disc list-inside space-y-1 text-gray-700">
+                                        <li>Random rotations (±15 degrees)</li>
+                                        <li>Horizontal and vertical flips</li>
+                                        <li>Random translations</li>
+                                        <li>Scaling variations</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-white p-4 rounded-lg shadow-sm">
+                                    <h4 class="font-medium text-gray-900 mb-2">2. Intensity Jiterations</h4>
+                                    <ul class="list-disc list-inside space-y-1 text-gray-700">
+                                        <li>Brightness adjustments (±10%)</li>
+                                        <li>Contrast modifications</li>
+                                        <li>Gaussian noise addition (σ = 0.01)</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-white p-4 rounded-lg shadow-sm">
+                                    <h4 class="font-medium text-gray-900 mb-2">3. GAN-based Synthesis (Will implement
+                                        this is future to improve the model)</h4>
+                                    <p class="text-gray-700">Utilized Generative Adversarial Networks to generate
+                                        synthetic MRI images with realistic variations.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h3 class="text-lg font-medium text-gray-700 mb-3">Preprocessing Pipeline</h3>
+                            <div class="space-y-4">
+                                <div class="bg-white p-4 rounded-lg shadow-sm">
+                                    <h4 class="font-medium text-gray-900 mb-2">Image Processing Steps</h4>
+                                    <ol class="list-decimal list-inside space-y-2 text-gray-700">
+                                        <li>Normalization: Standardized image intensities to a common scale</li>
+                                        <li>Resizing: All images resized to 224×224 pixels to match DeiT model
+                                            requirements</li>
+                                        <li>Channel Adjustment: Converted grayscale images to three-channel format by
+                                            duplicating the single channel</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h3 class="text-lg font-medium text-gray-700 mb-3">Training Strategy</h3>
+                            <div class="space-y-4">
+                                <div class="bg-white p-4 rounded-lg shadow-sm">
+                                    <h4 class="font-medium text-gray-900 mb-2">K-Fold Cross-Validation</h4>
+                                    <ul class="list-disc list-inside space-y-2 text-gray-700">
+                                        <li>Implemented 5-fold cross-validation for robust model assessment</li>
+                                        <li>Each fold trained independently to ensure generalized feature learning</li>
+                                        <li>Validation performed on each fold's validation set to monitor overfitting
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="bg-white p-4 rounded-lg shadow-sm">
+                                    <h4 class="font-medium text-gray-900 mb-2">Training Parameters</h4>
+                                    <table class="training-details w-full">
+                                        <tr>
+                                            <th class="text-left">Optimizer</th>
+                                            <td>AdamW</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-left">Batch Size</th>
+                                            <td>16</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-left">Epochs per Fold</th>
+                                            <td>10</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-left">K-Folds</th>
+                                            <td>5</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h3 class="text-lg font-medium text-gray-700 mb-3">Model Evaluation</h3>
+                            <div class="space-y-4">
+                                <div class="bg-white p-4 rounded-lg shadow-sm">
+                                    <h4 class="font-medium text-gray-900 mb-2">Evaluation Metrics</h4>
+                                    <ul class="list-disc list-inside space-y-2 text-gray-700">
+                                        <li>Accuracy</li>
+                                        <li>Precision</li>
+                                        <li>Recall</li>
+                                        <li>F1-score</li>
+                                        <li>Confusion Matrix</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-white p-4 rounded-lg shadow-sm">
+                                    <h4 class="font-medium text-gray-900 mb-2">Model Saving</h4>
+                                    <p class="text-gray-700">Trained models are saved with comprehensive metadata
+                                        including:</p>
+                                    <ul class="list-disc list-inside space-y-1 text-gray-700 mt-2">
+                                        <li>Class names</li>
+                                        <li>Training parameters</li>
+                                        <li>Performance metrics</li>
+                                        <li>Augmentation settings</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Technical Details Tab -->
+                <div id="technical" class="tab-content">
+                    <div class="space-y-6">
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h3 class="text-lg font-medium text-gray-700 mb-3">Model Implementation</h3>
+                            <div class="prose text-gray-700">
+                                <p>The model is implemented using PyTorch and the TIMM (PyTorch Image Models) library.
+                                    Below is the simplified code snippet of the model definition:</p>
+                                <pre class="bg-gray-800 text-white p-4 rounded-lg mt-2 overflow-x-auto">
+import torch.nn as nn
+import timm
+
+def create_deit_model(num_classes=4):
+    # Load pretrained DeiT small model
+    model = timm.create_model('deit_small_patch16_224', pretrained=True)
+    
+    # Replace the classification head with our own
+    model.head = nn.Linear(model.head.in_features, num_classes)
+    
+    return model</pre>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h3 class="text-lg font-medium text-gray-700 mb-3">Inference Pipeline</h3>
+                            <ol class="list-decimal list-inside space-y-2 text-gray-700">
+                                <li>Resize input MRI scan to 224×224 pixels</li>
+                                <li>Apply normalization using ImageNet mean and standard deviation</li>
+                                <li>Pass the processed image through the DeiT model</li>
+                                <li>Apply softmax to get class probabilities</li>
+                                <li>Select the class with the highest probability as prediction</li>
+                            </ol>
+                        </div>
+
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h3 class="text-lg font-medium text-gray-700 mb-3">Deployment</h3>
+                            <p class="text-gray-700">The model is deployed as part of a Flask web application that
+                                provides an intuitive interface for medical professionals. The application includes:</p>
+                            <ul class="list-disc list-inside space-y-2 text-gray-700 mt-2">
+                                <li>User-friendly upload interface</li>
+                                <li>Real-time processing and inference</li>
+                                <li>Visualization of model predictions and confidence</li>
+                                <li>Detailed explanation of results</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Tab switching functionality
+            const tabs = document.querySelectorAll('.tab-button');
+            const contents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Remove active class from all tabs and contents
+                    tabs.forEach(t => t.classList.remove('active'));
+                    contents.forEach(c => c.classList.remove('active'));
+
+                    // Add active class to clicked tab and corresponding content
+                    tab.classList.add('active');
+                    document.getElementById(tab.dataset.tab).classList.add('active');
+                });
+            });
+
+            // Fetch and update model information
+            fetch('/api/model-info')
+                .then(response => response.json())
+                .then(data => {
+                    // Update model details
+                    document.getElementById('model-name').textContent = data.app_name;
+                    document.getElementById('model-version').textContent = data.model_version;
+                    document.getElementById('model-type').textContent = data.model_type;
+                    document.getElementById('model-architecture').textContent = data.model_description.architecture;
+
+                    // Update technical specifications
+                    document.getElementById('input-size').textContent = data.model_description.input_size;
+                    document.getElementById('channels').textContent = data.model_description.channels;
+                    document.getElementById('pretrained').textContent = data.model_description.pretrained ? 'Yes' : 'No';
+
+                    // Update performance metrics
+                    const metrics = data.performance_metrics;
+                    document.getElementById('accuracy').textContent = `${(metrics.accuracy * 100).toFixed(1)}%`;
+                    document.getElementById('precision').textContent = `${(metrics.precision * 100).toFixed(1)}%`;
+                    document.getElementById('recall').textContent = `${(metrics.recall * 100).toFixed(1)}%`;
+                    document.getElementById('f1-score').textContent = `${(metrics.f1_score * 100).toFixed(1)}%`;
+
+                    // Update progress bars
+                    document.getElementById('accuracy-bar').style.width = `${metrics.accuracy * 100}%`;
+                    document.getElementById('precision-bar').style.width = `${metrics.precision * 100}%`;
+                    document.getElementById('recall-bar').style.width = `${metrics.recall * 100}%`;
+                    document.getElementById('f1-score-bar').style.width = `${metrics.f1_score * 100}%`;
+
+                    // Update learning rate
+                    const learningRate = document.getElementById('learning-rate');
+                    if (data.training_params && data.training_params.learning_rate) {
+                        learningRate.textContent = data.training_params.learning_rate;
+                    }
+
+                    // Update classes
+                    const classesContainer = document.getElementById('classes-container');
+                    data.class_names.forEach(className => {
+                        const classDiv = document.createElement('div');
+                        classDiv.className = 'bg-white border border-gray-200 rounded-lg p-3 shadow-sm';
+                        classDiv.innerHTML = `
+                            <div class="flex items-center">
+                                <i class="fas fa-circle text-indigo-500 mr-2"></i>
+                                <span class="text-gray-700">${className.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</span>
+                            </div>
+                        `;
+                        classesContainer.appendChild(classDiv);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching model information:', error);
+                    document.getElementById('model-info').innerHTML = '<p class="text-red-500">Error loading model information. Please try again later.</p>';
+                });
+
+            // Add mobile menu toggle functionality
+            const mobileMenuButton = document.querySelector('.mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            mobileMenuButton.addEventListener('click', function () {
+                const isHidden = mobileMenu.style.display === 'none';
+                mobileMenu.style.display = isHidden ? 'block' : 'none';
+                mobileMenuButton.setAttribute('aria-expanded', isHidden);
+            });
+        });
+    </script>
+</body>
+
+</html>

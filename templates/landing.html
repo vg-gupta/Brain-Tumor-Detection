@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroVision - Brain Tumor Classification</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+<body class="bg-gray-50">
+    <header class="bg-white shadow-sm">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i class="fas fa-brain text-indigo-600 text-2xl mr-2"></i>
+                        <a href="/" class="text-2xl font-bold text-indigo-600">NeuroVision</a>
+                    </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="/"
+                            class="border-indigo-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Home
+                        </a>
+                        <a href="/classify"
+                            class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Classify
+                        </a>
+                        <a href="/model-info"
+                            class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Model Info
+                        </a>
+                        <a href="/about"
+                            class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            About
+                        </a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <a href="https://github.com/yourusername/neurovision" target="_blank"
+                        class="text-gray-500 hover:text-gray-700">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <section class="hero">
+            <h1 class="hero-title">Advanced Brain Tumor Classification</h1>
+            <p class="hero-subtitle">Using state-of-the-art Vision Transformer technology to detect and classify brain
+                tumors with high accuracy</p>
+            <a href="/classify" class="btn">
+                <i class="fas fa-upload btn-icon"></i>
+                Try Classification
+            </a>
+        </section>
+
+        <section class="features">
+            <div class="feature-card">
+                <i class="fas fa-microscope feature-icon"></i>
+                <h2 class="feature-title">High Accuracy</h2>
+                <p class="feature-description">Our model achieves over 99% accuracy in tumor classification using
+                    advanced deep learning techniques.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-bolt feature-icon"></i>
+                <h2 class="feature-title">Fast Processing</h2>
+                <p class="feature-description">Get results in seconds with our optimized DeiT (Data-Efficient Image
+                    Transformer) Vision Transformer model.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-shield-alt feature-icon"></i>
+                <h2 class="feature-title">Secure & Private</h2>
+                <p class="feature-description">Your medical images are processed securely and never stored permanently.
+                </p>
+            </div>
+        </section>
+
+        <section class="card">
+            <div class="card-header">
+                <h2>How It Works</h2>
+            </div>
+            <div class="card-content">
+                <ol style="list-style-position: inside; margin-left: 1rem;">
+                    <li style="margin-bottom: 1rem;">Upload a brain MRI scan image</li>
+                    <li style="margin-bottom: 1rem;">Our AI model analyzes the image</li>
+                    <li style="margin-bottom: 1rem;">Get detailed classification results</li>
+                    <li>View probability distribution across tumor types</li>
+                </ol>
+            </div>
+        </section>
+    </main>
+
+    <footer style="text-align: center; padding: 2rem; background-color: white; margin-top: 4rem;">
+        <p style="color: var(--muted);">© 2024 NeuroVision. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>

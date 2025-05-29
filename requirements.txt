@@ -1,0 +1,8 @@
+flask==2.0.1
+flask-cors==3.0.10
+torch==1.9.0
+torchvision==0.10.0
+timm==0.4.12
+numpy==1.21.2
+Pillow==8.3.2
+matplotlib==3.4.3 
