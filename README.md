@@ -51,8 +51,8 @@ python app.py
 Open your browser and go to: http://127.0.0.1:5000/
 
 3. Upload an MRI image
-Upload an image via the interface to classify it as a tumor or non-tumor.
-![Uploading WhatsApp Image 2025-05-01 at 13.07.40_aa741e9c.jpg…]()
+Upload an image via the interface to classify it as a tumor or a non-tumor.
+![MRI Sample](static/images/interfcae.jpg)
 
 ## 🧪 Testing
 You can use test.ipynb to explore and test the model's performance and predictions on sample data.
