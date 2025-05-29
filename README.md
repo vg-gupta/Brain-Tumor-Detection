@@ -64,12 +64,12 @@ All dependencies are listed in the requirements.txt file. Key libraries may incl
 -OpenCV
 -Pandas
 
-##📌 Notes
+## 📌 Notes
 -Ensure all necessary model files are present in the models/ directory.
 =This tool is for educational and research purposes. Clinical use should follow medical regulations and validation.
 
-##🤝 Contributions
+## 🤝 Contributions
 Pull requests are welcome. For major changes, please open an issue first to discuss your ideas.
 
-##📜 License
+## 📜 License
 This project is open-source and available under the MIT License.
