@@ -56,7 +56,7 @@ Upload an image via the interface to classify it as a tumor or non-tumor.
 ## 🧪 Testing
 You can use test.ipynb to explore and test the model's performance and predictions on sample data.
 
-##📎 Requirements
+## 📎 Requirements
 All dependencies are listed in the requirements.txt file. Key libraries may include:
 -Flask
 -TensorFlow / Keras
