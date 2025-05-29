@@ -52,7 +52,7 @@ Open your browser and go to: http://127.0.0.1:5000/
 
 3. Upload an MRI image
 Upload an image via the interface to classify it as a tumor or a non-tumor.
-<img src="static/images/interface.jpg" alt="MRI Sample" width="300"/>
+<img src="static/images/interface.jpg" alt="MRI Sample" width="800"/>
 
 
 ## 🧪 Testing
